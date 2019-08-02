@@ -25,11 +25,11 @@ public class MuzixController {
 
     @PostMapping("/muzix")
 
-    public ResponseEntity<?> saveMusix(@RequestBody Muzix muzix) throws TrackAlreadyExistsException {
+    public ResponseEntity<?> saveTrack(@RequestBody Muzix muzix) throws TrackAlreadyExistsException {
         Muzix savedMuzix = null;
 
       try {
-        savedMuzix = muzixService.saveMusix(muzix);
+        savedMuzix = muzixService.saveTrack(muzix);
         }
         catch (TrackAlreadyExistsException e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
@@ -42,9 +42,9 @@ public class MuzixController {
 
     @GetMapping("/muzix")
 
-    public ResponseEntity<List<Muzix>> getMusixs() {
+    public ResponseEntity<List<Muzix>> getAllTracks() {
 
-        List<Muzix> musixes = muzixService.getMusix();
+        List<Muzix> musixes = muzixService.getAllTracks();
         return new ResponseEntity<List<Muzix>>(musixes, HttpStatus.OK);
 
 
@@ -52,14 +52,14 @@ public class MuzixController {
 
     @GetMapping("/muzix/{id}")
 
-    public ResponseEntity<?> getById(@PathVariable int id) throws TrackNotFoundException {
+    public ResponseEntity<?> getTrackById(@PathVariable int id) throws TrackNotFoundException {
         Muzix muzix = null;
 
        try {
-        muzix = muzixService.getById(id);
+        muzix = muzixService.getTrackById(id);
          }
         catch(TrackNotFoundException t){
-            return new ResponseEntity<>(t.getMessage(),HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(t.getMessage(),HttpStatus.CONFLICT);
         }
 
         return new ResponseEntity<Muzix>(muzix, HttpStatus.OK);
@@ -70,10 +70,10 @@ public class MuzixController {
      */
 
     @DeleteMapping("/muzix/{id}")
-    public ResponseEntity<?> deleteMuzix(@PathVariable int id) throws TrackNotFoundException {
+    public ResponseEntity<?> deleteTrackById(@PathVariable int id) throws TrackNotFoundException {
       Muzix muzix;
-      muzix = muzixService.getById(id);
-        muzixService.deleteById(id);
+      muzix = muzixService.getTrackById(id);
+        muzixService.deleteTrackById(id);
         return new ResponseEntity(muzix, HttpStatus.OK);
     }
 
@@ -82,9 +82,9 @@ public class MuzixController {
      */
 
     @PutMapping("/muzix/{id}")
-    public ResponseEntity<Muzix> updateMusix(@RequestBody Muzix muzix, @PathVariable int id) {
+    public ResponseEntity<Muzix> updateTrackById(@RequestBody Muzix muzix, @PathVariable int id) {
 
-        if (muzixService.updateById(muzix, id)) {
+        if (muzixService.updateTrackById(muzix, id)) {
             return ResponseEntity.notFound().build();
         }
 
@@ -92,9 +92,9 @@ public class MuzixController {
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<List<Muzix>> getByname(@PathVariable String name) {
-        List<Muzix> musix = muzixService.getBYName(name);
-        return new ResponseEntity<List<Muzix>>(musix, HttpStatus.OK);
+    public ResponseEntity<List<Muzix>> getTrackByname(@PathVariable String name) {
+        List<Muzix> musix = muzixService.getTrackBYName(name);
+        return new ResponseEntity<List<Muzix>>(musix, HttpStatus.CREATED);
     }
 
 }
