@@ -40,7 +40,7 @@ public class MuzixServiceImpl implements MuzixService , ApplicationListener<Cont
     }
 
     @Override
-    public Muzix saveMusix(Muzix muzix) throws TrackAlreadyExistsException {
+    public Muzix saveTrack(Muzix muzix) throws TrackAlreadyExistsException {
 
         if (muzixRepository.existsById(muzix.getId())) {
 
@@ -53,13 +53,13 @@ public class MuzixServiceImpl implements MuzixService , ApplicationListener<Cont
     }
 
     @Override
-    public List<Muzix> getMusix() {
+    public List<Muzix> getAllTracks() {
 
         return (List<Muzix>) muzixRepository.findAll();
     }
 
     @Override
-    public Muzix getById(int id) throws TrackNotFoundException {
+    public Muzix getTrackById(int id) throws TrackNotFoundException {
         Optional<Muzix> user_id = muzixRepository.findById(id);
 
         if (!user_id.isPresent())
@@ -74,7 +74,7 @@ public class MuzixServiceImpl implements MuzixService , ApplicationListener<Cont
     }
 
     @Override
-    public Muzix deleteById(int id) throws TrackNotFoundException {
+    public Muzix deleteTrackById(int id) throws TrackNotFoundException {
         muzixRepository.deleteById(id);
         MuzixService muzixService= null;
         return  muzixService.getById(id);
@@ -83,7 +83,7 @@ public class MuzixServiceImpl implements MuzixService , ApplicationListener<Cont
     }
 
     @Override
-    public boolean updateById(Muzix musix, int id) {
+    public boolean updateTrackById(Muzix musix, int id) {
 
         Optional<Muzix> userOptional = muzixRepository.findById(id);
 
@@ -98,7 +98,7 @@ public class MuzixServiceImpl implements MuzixService , ApplicationListener<Cont
 
     }
 
-    public List<Muzix> getBYName(String name) {
+    public List<Muzix> getTrackBYName(String name) {
         List<Muzix> user_id = muzixRepository.findTitleByName(name);
 
         return user_id;
